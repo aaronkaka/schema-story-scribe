@@ -1,0 +1,4 @@
+
+{
+  "query": "query GetUserWithPurchaseHistory {\n  getUser(id: \"123\") {\n    id\n    name\n    email\n    purchaseHistory {\n      items {\n        id\n        productName\n        purchaseDate\n        price\n      }\n      totalSpent\n    }\n  }\n}"
+}

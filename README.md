@@ -1,73 +1,46 @@
-# Welcome to your Lovable project
 
-## Project info
+# Declarative BFF - GraphQL Query Generator
 
-**URL**: https://lovable.dev/projects/89c7361a-2cb4-4ab3-b66b-8610fbd5b962
+This application helps you generate GraphQL queries from your schema and user stories using Anthropic's Claude AI.
 
-## How can I edit this code?
+## Usage
 
-There are several ways of editing your application.
+1. Upload your GraphQL schema file (AWS AppSync format)
+2. Upload a text file containing your user story or business requirements
+3. Click "Generate GraphQL Query" to have the AI create a query that fulfills the data requirements
+4. Copy the generated query to use in your application
 
-**Use Lovable**
+## API Configuration
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/89c7361a-2cb4-4ab3-b66b-8610fbd5b962) and start prompting.
+This application is configured to call an API endpoint for query generation. In a production environment, you'll need to:
 
-Changes made via Lovable will be committed automatically to this repo.
+1. Set up an API endpoint that can make calls to Anthropic's Claude API
+2. Configure your API key on the server-side to prevent exposure
+3. Update the fetch URL in `src/api/anthropic.ts` to point to your endpoint
 
-**Use your preferred IDE**
+## Backend Implementation Notes
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+For a complete implementation, you would need to create a backend service that:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Receives the schema and user story from the frontend
+2. Makes an authenticated request to Anthropic's Claude API
+3. Returns the generated GraphQL query to the frontend
 
-Follow these steps:
+This approach keeps your API key secure and handles any CORS restrictions properly.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Local Development
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Environment Variables
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+In a production environment, you'd need to set:
 
-**Use GitHub Codespaces**
+```
+ANTHROPIC_API_KEY=your_api_key_here
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/89c7361a-2cb4-4ab3-b66b-8610fbd5b962) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Note: Never expose your API key in the frontend code.
