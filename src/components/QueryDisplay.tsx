@@ -2,8 +2,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -59,17 +57,9 @@ const QueryDisplay: React.FC<QueryDisplayProps> = ({ query, isLoading }) => {
               <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
             </div>
           ) : query ? (
-            <SyntaxHighlighter
-              language="graphql"
-              style={atomDark}
-              customStyle={{
-                margin: 0,
-                borderRadius: '0.375rem',
-                minHeight: '300px',
-              }}
-            >
+            <pre className="text-white p-4 whitespace-pre-wrap overflow-auto h-[300px] text-sm font-mono">
               {query}
-            </SyntaxHighlighter>
+            </pre>
           ) : (
             <div className="flex h-[300px] items-center justify-center text-white opacity-50">
               Generated query will appear here
