@@ -1,4 +1,6 @@
 
+import { supabase } from "@/integrations/supabase/client";
+
 export interface AnthropicAPIResponse {
   success: boolean;
   data?: string;
@@ -10,21 +12,20 @@ export async function generateGraphQLQuery(
   userStory: string
 ): Promise<AnthropicAPIResponse> {
   try {
-    // Fetch from our backend (we'd create this separately in a server environment)
-    const response = await fetch('/api/generate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        schema,
-        userStory,
-      }),
+    // Call our Supabase Edge Function
+    const { data, error } = await supabase.functions.invoke('generate-query', {
+      body: { schema, userStory },
     });
 
-    const data = await response.json();
+    if (error) {
+      console.error('Error calling generate-query function:', error);
+      return {
+        success: false,
+        error: error.message || 'Failed to generate GraphQL query',
+      };
+    }
 
-    if (!response.ok) {
+    if (!data.success) {
       return {
         success: false,
         error: data.error || 'Failed to generate GraphQL query',
@@ -33,7 +34,7 @@ export async function generateGraphQLQuery(
 
     return {
       success: true,
-      data: data.query,
+      data: data.data,
     };
   } catch (error) {
     console.error('Error calling Anthropic API:', error);
