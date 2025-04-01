@@ -78,19 +78,6 @@ Return ONLY the GraphQL query without any explanations.
 
     console.log('Successfully generated query');
 
-    // Store in query_history table
-    const createClient = (await import('https://esm.sh/@supabase/supabase-js@2.38.4')).createClient;
-    const supabaseUrl = Deno.env.get('SUPABASE_URL') || '';
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '';
-    
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    
-    await supabase.from('query_history').insert({
-      schema,
-      user_story: userStory,
-      generated_query: generatedQuery
-    });
-
     return new Response(
       JSON.stringify({ success: true, data: generatedQuery }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
