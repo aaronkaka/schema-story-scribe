@@ -104,7 +104,7 @@ const Index = () => {
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
             </>
           ) : (
-            'Generate GraphQL Query'
+            <span className="font-bold">Generate GraphQL Query</span>
           )}
         </Button>
       </div>
